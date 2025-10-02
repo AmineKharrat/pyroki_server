@@ -403,8 +403,11 @@ class TrajectoryWebSocketServer:
             
     async def handle_websocket(self, websocket):
         """Handle incoming WebSocket connections."""
-        print(f"Client connected from {websocket.remote_address}")
-        
+        print(f"\n{'='*60}")
+        print(f"🔌 NEW CLIENT CONNECTED: {websocket.remote_address}")
+        print(f"📊 Total clients: {len(self.connected_clients) + 1}")
+        print(f"{'='*60}\n")
+
         # Add client to connected clients set
         self.connected_clients.add(websocket)
         
@@ -456,17 +459,17 @@ class TrajectoryWebSocketServer:
                     }))
                     
         except websockets.exceptions.ConnectionClosedOK:
-            print("Client disconnected normally")
+            print(f"\n❌ Client disconnected normally: {websocket.remote_address}")
         except websockets.exceptions.ConnectionClosedError as e:
-            print(f"Client disconnected with error: {e}")
+            print(f"\n❌ Client disconnected with error: {websocket.remote_address} - {e}")
         except Exception as e:
-            print(f"WebSocket error: {e}")
+            print(f"\n⚠️ WebSocket error: {e}")
             import traceback
             traceback.print_exc()
         finally:
             # Remove client from connected clients set
             self.connected_clients.discard(websocket)
-            print(f"Client removed. {len(self.connected_clients)} clients remaining.")
+            print(f"📊 Client removed. {len(self.connected_clients)} clients remaining.\n")
             
     async def start_server(self):
         """Start the WebSocket server."""
