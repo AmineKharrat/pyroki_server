@@ -28,8 +28,9 @@ import pyroki_snippets as pks
 class TrajectoryWebSocketServer:
     """WebSocket server for receiving and executing robot trajectories."""
 
-    def __init__(self, robot_name: str = "panda", port: int = 8765):
+    def __init__(self, robot_name: str = "panda", port: int = 8765, host: str = "localhost"):
         self.port = port
+        self.host = host
         self.robot_name = robot_name
         
         # Robot setup
@@ -478,7 +479,7 @@ class TrajectoryWebSocketServer:
         # Start WebSocket server
         server = await websockets.serve(
             self.handle_websocket,
-            "localhost",
+            self.host,
             self.port
         )
         
