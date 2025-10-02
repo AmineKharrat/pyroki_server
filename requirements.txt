@@ -17,3 +17,6 @@ websockets>=12.0
 
 # Git dependency for jaxls
 git+https://github.com/brentyi/jaxls.git
+
+# Install pyroki itself from current directory
+-e .
