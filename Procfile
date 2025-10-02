@@ -1,1 +1,1 @@
-web: python start_server.py
+web: /app/.venv/bin/python start_server.py
