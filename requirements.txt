@@ -1,5 +1,19 @@
-# Install pyroki package itself (from current directory)
--e .
+# Core dependencies from pyproject.toml
+tyro
+jax>=0.4.0
+jaxlib
+jaxlie>=1.0.0
+jax_dataclasses>=1.0.0
+jaxtyping
+loguru
+robot_descriptions
+yourdfpy
+trimesh
+viser
+pyliblzfse
 
 # Additional dependency for WebSocket server
 websockets>=12.0
+
+# Git dependency for jaxls
+git+https://github.com/brentyi/jaxls.git

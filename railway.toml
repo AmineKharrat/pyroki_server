@@ -1,0 +1,17 @@
+[build]
+builder = "nixpacks"
+
+[build.nixpacksPlan.phases.setup]
+nixPkgs = ["python310"]
+
+[build.nixpacksPlan.phases.install]
+cmds = [
+  "pip install --upgrade pip",
+  "pip install -r requirements.txt",
+  "pip install -e ."
+]
+
+[deploy]
+startCommand = "python start_server.py"
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
