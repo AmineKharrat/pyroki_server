@@ -8,32 +8,9 @@ import os
 import sys
 from pathlib import Path
 
-# Debug: Print Python path and sys.path
-print(f"Python executable: {sys.executable}")
-print(f"Python version: {sys.version}")
-print(f"sys.path: {sys.path}")
-
-# Debug: Check if pyroki source exists
-import os
-print(f"\nChecking for pyroki source:")
-print(f"/app exists: {os.path.exists('/app')}")
-print(f"/app/src exists: {os.path.exists('/app/src')}")
-print(f"/app/src/pyroki exists: {os.path.exists('/app/src/pyroki')}")
-print(f"/app contents: {os.listdir('/app')}")
-if os.path.exists('/app/src'):
-    print(f"/app/src contents: {os.listdir('/app/src')}")
-
-# Debug: Check what's in site-packages
-import site
-site_packages = site.getsitepackages()[0]
-print(f"\nsite-packages: {site_packages}")
-if os.path.exists(site_packages):
-    print(f"pyroki in site-packages: {'pyroki' in os.listdir(site_packages)}")
-    print(f"pyroki.egg-link exists: {os.path.exists(os.path.join(site_packages, 'pyroki.egg-link'))}")
-    if os.path.exists(os.path.join(site_packages, 'pyroki.egg-link')):
-        with open(os.path.join(site_packages, 'pyroki.egg-link')) as f:
-            print(f"pyroki.egg-link content: {f.read()}")
-
+# Add pyroki source to path for Railway deployment
+# The editable install link doesn't survive container layers
+sys.path.insert(0, str(Path(__file__).parent / "src"))
 sys.path.insert(0, str(Path(__file__).parent / "examples"))
 
 from websocket_trajectory_server import TrajectoryWebSocketServer
