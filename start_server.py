@@ -7,6 +7,12 @@ Supports both local development and production hosting.
 import os
 import sys
 from pathlib import Path
+
+# Debug: Print Python path and sys.path
+print(f"Python executable: {sys.executable}")
+print(f"Python version: {sys.version}")
+print(f"sys.path: {sys.path}")
+
 sys.path.insert(0, str(Path(__file__).parent / "examples"))
 
 from websocket_trajectory_server import TrajectoryWebSocketServer
