@@ -28,11 +28,11 @@ import pyroki_snippets as pks
 class TrajectoryWebSocketServer:
     """WebSocket server for receiving and executing robot trajectories."""
 
-    def __init__(self, robot_name: str = "panda", port: int = 8765, host: str = "localhost"):
+    def __init__(self, robot_name: str = "panda", port: int = 8765, host: str = "localhost", viser_port: int = 8081):
         self.port = port
         self.host = host
         self.robot_name = robot_name
-        
+
         # Robot setup
         if robot_name == "panda":
             self.urdf = load_robot_description("panda_description")
@@ -42,14 +42,14 @@ class TrajectoryWebSocketServer:
             self.target_link_name = "link8"  # Use the last link as end-effector
         else:
             raise ValueError(f"Unsupported robot: {robot_name}")
-        
+
         self.robot = pk.Robot.from_urdf(self.urdf)
-        
+
         # Apply -90 degree rotation around X-axis to robot base
         self._apply_base_transform()
-        
-        # Visualization setup
-        self.server = viser.ViserServer()
+
+        # Visualization setup - use separate port to avoid conflicts
+        self.server = viser.ViserServer(port=viser_port)
         self.server.scene.add_grid("/ground", width=2, height=2)
         
         # Create ViserUrdf with the robot

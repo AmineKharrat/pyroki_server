@@ -18,6 +18,8 @@ from websocket_trajectory_server import TrajectoryWebSocketServer
 def main():
     # Get port from environment variable (Railway) or use default
     port = int(os.getenv("PORT", 8765))
+    # Viser visualization port (different from WebSocket port to avoid conflicts)
+    viser_port = int(os.getenv("VISER_PORT", 8081))
 
     # Get host - bind to 0.0.0.0 for Railway, localhost for local dev
     host = "0.0.0.0" if os.getenv("RAILWAY_ENVIRONMENT") else "localhost"
@@ -25,9 +27,10 @@ def main():
     print("Starting WebSocket Trajectory Server...")
     print(f"Environment: {'Railway' if os.getenv('RAILWAY_ENVIRONMENT') else 'Local'}")
     print(f"Host: {host}")
-    print(f"Port: {port}")
+    print(f"WebSocket Port: {port}")
+    print(f"Viser Port: {viser_port}")
 
-    server = TrajectoryWebSocketServer(robot_name="panda", port=port, host=host)
+    server = TrajectoryWebSocketServer(robot_name="panda", port=port, host=host, viser_port=viser_port)
     print("Server initialized successfully!")
     print("Robot configuration loaded.")
 
