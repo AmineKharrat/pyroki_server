@@ -1,8 +1,11 @@
 FROM python:3.10-slim
 
-# Install system dependencies including git
+# Install system dependencies including git and build tools
 RUN apt-get update && apt-get install -y \
     git \
+    gcc \
+    g++ \
+    make \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
