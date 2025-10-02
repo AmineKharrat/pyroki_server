@@ -35,12 +35,15 @@ def main():
     print("Robot configuration loaded.")
 
     if os.getenv("RAILWAY_ENVIRONMENT"):
-        railway_domain = os.getenv("RAILWAY_PUBLIC_DOMAIN", "your-railway-domain.railway.app")
-        print(f"\n🚀 WebSocket server running on Railway")
+        # Railway provides RAILWAY_PUBLIC_DOMAIN or we use the known domain
+        railway_domain = os.getenv("RAILWAY_PUBLIC_DOMAIN") or os.getenv("RAILWAY_STATIC_URL") or "dependable-happiness-production.up.railway.app"
+        print(f"\n{'='*60}")
+        print(f"🚀 WebSocket Server Running on Railway")
+        print(f"{'='*60}")
         print(f"📡 WebSocket URL: wss://{railway_domain}")
-        print(f"🎨 Viser visualization: https://{railway_domain} (if port {viser_port} is exposed)")
-        print(f"\nNote: Railway only exposes port {port} by default.")
-        print(f"Viser runs on port {viser_port} for internal use.")
+        print(f"🎨 Viser (internal): port {viser_port}")
+        print(f"⚡ WebSocket (public): port {port}")
+        print(f"{'='*60}\n")
     else:
         print("Viser visualization should be available at: http://localhost:{viser_port}")
         print(f"WebSocket server will run at: ws://{host}:{port}")
