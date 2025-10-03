@@ -478,7 +478,7 @@ class TrajectoryWebSocketServer:
             self.main_loop = asyncio.get_running_loop()
 
             print(f"[START_SERVER] Starting WebSocket server on {self.host}:{self.port}")
-            print(f"[START_SERVER] Viser visualization available at port {self.server.port}")
+            print(f"[START_SERVER] Viser visualization running (internal only)")
 
             # Start WebSocket server
             server = await websockets.serve(
