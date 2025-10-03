@@ -58,9 +58,18 @@ def main():
 
     try:
         import asyncio
+        print(f"[MAIN] Calling asyncio.run(server.start_server())...")
         asyncio.run(server.start_server())
+        print(f"[MAIN] asyncio.run() returned (this should never happen!)")
     except KeyboardInterrupt:
         print("\nServer stopped by user")
+    except Exception as e:
+        print(f"\n[MAIN] FATAL ERROR: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
+    finally:
+        print(f"[MAIN] Exiting main()")
 
 if __name__ == "__main__":
     main()
