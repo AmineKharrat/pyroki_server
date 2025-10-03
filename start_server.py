@@ -33,6 +33,7 @@ def main():
     server = TrajectoryWebSocketServer(robot_name="panda", port=port, host=host, viser_port=viser_port)
     print("Server initialized successfully!")
     print("Robot configuration loaded.")
+    print(f"About to start async server loop...")
 
     if os.getenv("RAILWAY_ENVIRONMENT"):
         # Railway provides RAILWAY_PUBLIC_DOMAIN or we use the known domain

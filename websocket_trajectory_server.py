@@ -473,24 +473,31 @@ class TrajectoryWebSocketServer:
             
     async def start_server(self):
         """Start the WebSocket server."""
-        # Store reference to the main event loop
-        self.main_loop = asyncio.get_running_loop()
-        
-        print(f"Starting WebSocket server on port {self.port}")
-        print("Viser visualization available at: http://localhost:8080")
-        
-        # Start WebSocket server
-        server = await websockets.serve(
-            self.handle_websocket,
-            self.host,
-            self.port
-        )
-        
-        print(f"WebSocket server running at ws://localhost:{self.port}")
-        print("Send trajectory data or click 'Send Example Trajectory' in the GUI")
-        
-        # Keep server running
-        await server.wait_closed()
+        try:
+            # Store reference to the main event loop
+            self.main_loop = asyncio.get_running_loop()
+
+            print(f"[START_SERVER] Starting WebSocket server on {self.host}:{self.port}")
+            print(f"[START_SERVER] Viser visualization available at port {self.server.port}")
+
+            # Start WebSocket server
+            server = await websockets.serve(
+                self.handle_websocket,
+                self.host,
+                self.port
+            )
+
+            print(f"[START_SERVER] ✓ WebSocket server running at ws://{self.host}:{self.port}")
+            print(f"[START_SERVER] Send trajectory data or click 'Send Example Trajectory' in the GUI")
+            print(f"[START_SERVER] Waiting for connections (server will run forever)...")
+
+            # Keep server running indefinitely
+            await server.wait_closed()
+        except Exception as e:
+            print(f"[START_SERVER] ERROR: {e}")
+            import traceback
+            traceback.print_exc()
+            raise
         
 
 def main():
