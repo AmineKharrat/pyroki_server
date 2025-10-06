@@ -184,6 +184,16 @@ class TrajectoryWebSocketServer:
             return
 
         joint_list = joint_config.tolist()
+
+        # PyRoki gives us 8 joints (7 arm + 1 combined gripper)
+        # Split the last joint into two separate gripper fingers for client
+        if len(joint_list) == 8:
+            # Take first 7 joints (arm) and split the 8th (gripper) into two fingers
+            arm_joints = joint_list[:7]
+            gripper_value = joint_list[7]
+            # Both gripper fingers move symmetrically (mirrored)
+            joint_list = arm_joints + [gripper_value, gripper_value]
+
         print(f"[BROADCAST] Sending {len(joint_list)} joints: {joint_list}")
 
         message = {
