@@ -72,10 +72,12 @@ class TrajectoryWebSocketServer:
         # Set initial robot pose
         print(f"Setting initial robot configuration: {self.current_config}")
         print(f"Config type: {type(self.current_config)}")
-        
+        print(f"Number of joints: {len(self.current_config)}")
+
         # Convert to the same format that solve_ik returns (numpy array)
         config_np = np.array(self.current_config)
         print(f"Converted config type: {type(config_np)}")
+        print(f"Converted config shape: {config_np.shape}")
         self.urdf_vis.update_cfg(config_np)
         
         # Store as numpy array for consistency
@@ -180,10 +182,13 @@ class TrajectoryWebSocketServer:
         """Broadcast current joint state to all connected WebSocket clients."""
         if not self.connected_clients:
             return
-            
+
+        joint_list = joint_config.tolist()
+        print(f"[BROADCAST] Sending {len(joint_list)} joints: {joint_list}")
+
         message = {
             "type": "joint_state",
-            "joint_config": joint_config.tolist(),
+            "joint_config": joint_list,
             "timestamp": time.time()
         }
         
